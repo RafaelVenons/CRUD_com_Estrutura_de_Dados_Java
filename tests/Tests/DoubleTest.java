@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 import Main.Data;
 import Main.ReadNullException;
 
-class MainTest {
-	private Data data;
+class DoubleTest {
+	private Data<Double> data;
 	
 	@BeforeEach
 	void initialize() {
-		data = new Data();
+		data = new Data<Double>();
 	}
 	
 	@Test
@@ -38,10 +38,10 @@ class MainTest {
 	@Test
 	void testCreateRepeatingDatas() {
 		data.create("Batata", 5.0);
-		data.create("Batata", 5.0);
-		data.create("Batata", 5.0);
+		data.create("Batata", 6.0);
+		data.create("Batata", 7.0);
 		assertEquals(1, data.size());
-		assertEquals(15.0, data.read("Batata"));
+		assertEquals(5.0, data.read("Batata"));
 	}
 	
 	@Test
@@ -62,22 +62,30 @@ class MainTest {
 	void testUpdate() {
 		data.create("Batata", 5.0);
 		data.update("Batata", 10.0);
-		 assertEquals(10.0, data.read("Batata"));
+		assertEquals(10.0, data.read("Batata"));
 	}
 	
 	@Test
 	void testUpdateWithoutCreate() {
 		data.update("Batata", 5.0);
-		 assertEquals(5.0, data.read("Batata"));
+		assertEquals(5.0, data.read("Batata"));
 	}
 	
 	@Test
 	void testDelete() {
 		data.create("Batata", 5.0);
-		data.delete("Batata");		 
+		data.delete("Batata");	
+		assertEquals(0, data.size());
 		try {
 			data.read("Batata");
 			fail("Não Deletou variavel");
 		}catch(ReadNullException e) {}
+	}
+	
+	@Test
+	void testDeleteNonexistentObject() {
+		data.create("Batata", 5.0);
+		data.delete("Tomate");		 
+		assertEquals(1, data.size());
 	}
 }
