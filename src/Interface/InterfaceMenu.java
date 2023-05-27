@@ -1,28 +1,17 @@
 package Interface;
 
-import java.util.Scanner;
-
 import Data.Data;
 
 public class InterfaceMenu {
 	
-	private static Scanner scanner = new Scanner(System.in);
 	private static Data<Double> list = new Data<Double>();
+	private static InputOutput io = new InputOutput();
 	
 	public static void main(String[] args) {
         int opcao;
 
         do {
-            System.out.println("===== Lista de Comprass =====");
-            System.out.println("1. Inserir novo item a lista");
-            System.out.println("2. Imprimir lista de Compras");
-            System.out.println("3. Atualizar item da lista");
-            System.out.println("4. Excluir item da lista");
-            System.out.println("0. Sair");
-            System.out.println("=============================");
-
-            System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
+            opcao = io.menu();
 
             switch (opcao) {
                 case 1:
@@ -38,56 +27,44 @@ public class InterfaceMenu {
                     removeItem();
                     break;
                 case 0:
-                    System.out.println("Encerrando o programa...");
+                    io.closingProgram();
                     break;
                 default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                    io.invalidOption();
                     break;
             }
         } while (opcao != 0);
+        return;
     }
 	
 	private static void setItem() {
-		System.out.print("Informe o item a ser adicionado a lista: ");
-		String item = scanner.next();
+		String item = io.getItem("creat");
 		if(list.contains(item)){
-			System.out.println("Item já contem na lista!");
+			io.existingItem();
 			return;
 		} 
-		System.out.print("Informe a quantidade do item: ");
-		Double amount = scanner.nextDouble();
+		Double amount = io.getAmount();
 		list.create(item, amount);
 	}
 	
 	private static void printItems() {
 		if(list.size() == 0){
-			System.out.println("Não tem ingredientes na lista!");
+			io.voidList();
 			return;
 		}
 		list.forEach((item, amount) -> {
-		      System.out.println(item + " -> " + amount);
+		      io.printItem(item, amount);
 		});
 	}
 	
 	private static void updateItem() {
-		System.out.print("Informe o item a ser adicionado a lista: ");
-		String item = scanner.next();
-		System.out.print("Informe a quantidade do item: ");
-		Double amount = scanner.nextDouble();
-		if(list.update(item, amount)) {
-			System.out.println("Item atualizado com sucesso!");
-		}else {
-			System.out.println("Item não encontrado, criado novo tem!");
-		}
+		String item = io.getItem("update");
+		Double amount = io.getAmount();
+		io.finishUpdate(list.update(item, amount));
 	}
 	
 	private static void removeItem() {
-		System.out.print("Informe o item a ser adicionado a lista: ");
-		String item = scanner.next();
-		if(list.delete(item)) {
-			System.out.println("Item removido com sucesso!");
-			return;
-		}
-		System.out.println("Item não encontrado!");
+		String item = io.getItem("remove");
+		io.finishRemoveSuccess(list.delete(item));
 	}
 }
