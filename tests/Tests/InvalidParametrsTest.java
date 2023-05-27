@@ -1,15 +1,15 @@
 package Tests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import Main.Data;
-import Main.InvalidParameterException;
-import Main.ReadNullException;
+import Data.Data;
+import Data.InvalidParameterException;
 
-class InvalidParametrsText {
+class InvalidParametrsTest {
 
 private Data<Double> data;
 	
@@ -21,15 +21,15 @@ private Data<Double> data;
 	@Test
 	void testCreatingFirstInvalidParameter() {
 		try {
-			data.create(null, 1.0);
+			assertEquals(false, data.create(null, 1.0));
 			fail("Aceitou String null");
 		}catch(InvalidParameterException e) {}
 		try {
-			data.create("", 1.0);
+			assertEquals(false, data.create("", 1.0));
 			fail("Aceitou String vazia");
 		}catch(InvalidParameterException e) {}
 		try {
-			data.create("  ", 1.0);
+			assertEquals(false, data.create("  ", 1.0));
 			fail("Aceitou String vazia");
 		}catch(InvalidParameterException e) {}
 	}
@@ -37,39 +37,30 @@ private Data<Double> data;
 	@Test
 	void testCreatingSecondInvalidParameter() {
 		try {
-			data.create("Batata",null);
+			assertEquals(false, data.create("Batata",null));
 			fail("Aceitou String null");
 		}catch(InvalidParameterException e) {}
 	}
 	
 	@Test
 	void testReadInvalidParameter() {
-		try {
-			data.read(null);
-			fail("Aceitou String null");
-		}catch(ReadNullException e) {}
-		try {
-			data.read("");
-			fail("Aceitou String vazia");
-		}catch(ReadNullException e) {}
-		try {
-			data.read("  ");
-			fail("Aceitou String vazia");
-		}catch(ReadNullException e) {}
+		assertEquals(null, data.read(null));
+		assertEquals(null, data.read(""));
+		assertEquals(null, data.read("  "));
 	}
 	
 	@Test
 	void testUpdateFirstInvalidParameter() {
 		try {
-			data.update(null, 5.0);
+			assertEquals(false, data.update(null, 5.0));
 			fail("Aceitou String null");
 		}catch(InvalidParameterException e) {}
 		try {
-			data.update("", 5.0);
+			assertEquals(false, data.update("", 5.0));
 			fail("Aceitou String vazia");
 		}catch(InvalidParameterException e) {}
 		try {
-			data.update("  ", 5.0);
+			assertEquals(false, data.update("  ", 5.0));
 			fail("Aceitou String vazia");
 		}catch(InvalidParameterException e) {}
 	}
@@ -77,17 +68,17 @@ private Data<Double> data;
 	@Test
 	void testUpdateSecondInvalidParameter() {
 		try {
-			data.update("Batata", null);
+			assertEquals(false, data.update("Batata", null));
 			fail("Aceitou String null");
 		}catch(InvalidParameterException e) {}
 	}
 	
 	@Test
 	void testDeleteInvalidParameter() {
-		data.create("Batata", 5.0);
-		data.delete(null);
-		data.delete("");
-		data.delete("  ");
+		assertEquals(true, data.create("Batata", 5.0));
+		assertEquals(false, data.delete(null));
+		assertEquals(false, data.delete(""));
+		assertEquals(false, data.delete("  "));
 		assertEquals(1, data.size());
 	}
 }
