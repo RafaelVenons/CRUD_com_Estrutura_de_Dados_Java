@@ -2,8 +2,6 @@ package Interface;
 
 import java.util.Scanner;
 
-import Data.Data;
-
 public class InputOutput {
 	
 	private Scanner scanner;
