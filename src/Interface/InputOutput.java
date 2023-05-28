@@ -42,8 +42,15 @@ public class InputOutput {
 	}
 	
 	public Double getAmount() {
+		double amount;
 		System.out.print("Informe a quantidade do item: ");
-		return scanner.nextDouble();
+		amount = scanner.nextDouble();
+		while(amount <= 0.0) {
+			System.out.println("Valor " + amount + " invalido!");
+			System.out.print("Informe uma quantidade positiva: ");
+			amount = scanner.nextDouble();
+		}
+		return amount;
 	}
 	
 	public void existingItem() {
@@ -62,7 +69,7 @@ public class InputOutput {
 		if(success)
 			System.out.println("Item atualizado com sucesso!");
 		else
-			System.out.println("Item não encontrado, criado novo tem!");
+			System.out.println("Novo item criado!");
 	}
 	
 	public void finishRemoveSuccess(boolean success) {

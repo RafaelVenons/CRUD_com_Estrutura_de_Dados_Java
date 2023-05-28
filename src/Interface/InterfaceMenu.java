@@ -47,24 +47,31 @@ public class InterfaceMenu {
 		list.create(item, amount);
 	}
 	
-	private static void printItems() {
+	private static boolean printItems() {
 		if(list.size() == 0){
 			io.voidList();
-			return;
+			return false;
 		}
-		list.forEach((item, amount) -> {
-		      io.printItem(item, amount);
-		});
+		listItens();
+		return true;
 	}
 	
 	private static void updateItem() {
-		String item = io.getItem("update");
+		String item = io.getItem(printItems() ? "update" : "creat");
 		Double amount = io.getAmount();
 		io.finishUpdate(list.update(item, amount));
 	}
 	
 	private static void removeItem() {
-		String item = io.getItem("remove");
-		io.finishRemoveSuccess(list.delete(item));
+		if(printItems()) {
+			String item = io.getItem("remove");
+			io.finishRemoveSuccess(list.delete(item));
+		}
+	}
+	
+	private static void listItens() {
+		list.forEach((item, amount) -> {
+		      io.printItem(item, amount);
+		});
 	}
 }
