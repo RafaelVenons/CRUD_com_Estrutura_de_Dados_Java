@@ -5,13 +5,12 @@ import Data.Data;
 public class InterfaceMenu {
 	
 	private static Data<Double> list = new Data<Double>();
-	private static InputOutput io = new InputOutput();
 	
 	public static void main(String[] args) {
         int opcao;
 
         do {
-            opcao = io.menu();
+            opcao = InputOutput.menu();
 
             switch (opcao) {
                 case 1:
@@ -27,10 +26,10 @@ public class InterfaceMenu {
                     removeItem();
                     break;
                 case 0:
-                    io.closingProgram();
+                    InputOutput.closingProgram();
                     break;
                 default:
-                    io.invalidOption();
+                    InputOutput.invalidOption();
                     break;
             }
         } while (opcao != 0);
@@ -38,18 +37,18 @@ public class InterfaceMenu {
     }
 	
 	private static void setItem() {
-		String item = io.getItem("creat");
+		String item = InputOutput.getItem("creat");
 		if(list.contains(item)){
-			io.existingItem();
+			InputOutput.existingItem();
 			return;
 		} 
-		Double amount = io.getAmount();
+		Double amount = InputOutput.getAmount();
 		list.create(item, amount);
 	}
 	
 	private static boolean printItems() {
 		if(list.size() == 0){
-			io.voidList();
+			InputOutput.voidList();
 			return false;
 		}
 		listItens();
@@ -57,21 +56,21 @@ public class InterfaceMenu {
 	}
 	
 	private static void updateItem() {
-		String item = io.getItem(printItems() ? "update" : "creat");
-		Double amount = io.getAmount();
-		io.finishUpdate(list.update(item, amount));
+		String item = InputOutput.getItem(printItems() ? "update" : "creat");
+		Double amount = InputOutput.getAmount();
+		InputOutput.finishUpdate(list.update(item, amount));
 	}
 	
 	private static void removeItem() {
 		if(printItems()) {
-			String item = io.getItem("remove");
-			io.finishRemoveSuccess(list.delete(item));
+			String item = InputOutput.getItem("remove");
+			InputOutput.finishRemoveSuccess(list.delete(item));
 		}
 	}
 	
 	private static void listItens() {
 		list.forEach((item, amount) -> {
-		      io.printItem(item, amount);
+		      InputOutput.printItem(item, amount);
 		});
 	}
 }

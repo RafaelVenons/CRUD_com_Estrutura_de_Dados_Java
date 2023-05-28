@@ -4,13 +4,9 @@ import java.util.Scanner;
 
 public class InputOutput {
 	
-	private Scanner scanner;
+	private static Scanner scanner = new Scanner(System.in);
 	
-	InputOutput(){
-		scanner = new Scanner(System.in);
-	}
-	
-	public Integer menu() {
+	public static Integer menu() {
 		System.out.println("===== Lista de Comprass =====");
         System.out.println("1. Inserir novo item a lista");
         System.out.println("2. Imprimir lista de Compras");
@@ -24,7 +20,7 @@ public class InputOutput {
         return scanner.nextInt();
 	}
 	
-	public String getItem(String option) {
+	public static String getItem(String option) {
 		switch(option) {
 			case "creat":
 				System.out.print("Informe o item a ser adicionado a lista: ");
@@ -41,7 +37,7 @@ public class InputOutput {
 		return scanner.next(); 
 	}
 	
-	public Double getAmount() {
+	public static Double getAmount() {
 		double amount;
 		System.out.print("Informe a quantidade do item: ");
 		amount = scanner.nextDouble();
@@ -53,37 +49,37 @@ public class InputOutput {
 		return amount;
 	}
 	
-	public void existingItem() {
+	public static void existingItem() {
 		System.out.println("Item já contem na lista!");
 	}
 	
-	public void voidList() {
+	public static void voidList() {
 		System.out.println("Não tem ingredientes na lista!");
 	}
 	
-	public void printItem(String item, Double amount) {
+	public static void printItem(String item, Double amount) {
 		System.out.println(item + " -> " + amount);
 	}
 	
-	public void finishUpdate(boolean success) {
+	public static void finishUpdate(boolean success) {
 		if(success)
 			System.out.println("Item atualizado com sucesso!");
 		else
 			System.out.println("Novo item criado!");
 	}
 	
-	public void finishRemoveSuccess(boolean success) {
+	public static void finishRemoveSuccess(boolean success) {
 		if(success)
 			System.out.println("Item removido com sucesso!");
 		else
 			System.out.println("Item não encontrado!");
 	}
 	
-	public void closingProgram() {
+	public static void closingProgram() {
 		System.out.println("Encerrando o programa...");
 	}
 	
-	public void invalidOption(){
+	public static void invalidOption(){
 		System.out.println("Opção inválida. Tente novamente.");
 	}
 }
