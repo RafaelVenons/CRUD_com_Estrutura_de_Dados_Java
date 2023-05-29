@@ -1,18 +1,19 @@
 package Interface;
 
 import Data.Data;
+import Data.DataDAO;
 
 public class InterfaceMenu {
 	
 	private static Data<Double> list = new Data<Double>();
 	
 	public static void main(String[] args) {
-        int opcao;
+        int option;
 
         do {
-            opcao = InputOutput.menu();
+            option = InputOutput.menu();
 
-            switch (opcao) {
+            switch (option) {
                 case 1:
                     setItem();
                     break;
@@ -25,21 +26,33 @@ public class InterfaceMenu {
                 case 4:
                     removeItem();
                     break;
+                case 5:
+                    showLists();
+                    break;
+                case 6:
+                    loadList();
+                    break;
+                case 7:
+                	saveList();
+                    break;
+                case 8:
+                	removeList();
+                    break;
                 case 0:
                     InputOutput.closingProgram();
                     break;
                 default:
-                    InputOutput.invalidOption();
+                    InputOutput.invalidOption(option);
                     break;
             }
-        } while (opcao != 0);
+        } while (option != 0);
         return;
     }
 	
 	private static void setItem() {
 		String item = InputOutput.getItem("creat");
 		if(list.contains(item)){
-			InputOutput.existingItem();
+			InputOutput.existingItem(item);
 			return;
 		} 
 		Double amount = InputOutput.getAmount();
@@ -58,13 +71,13 @@ public class InterfaceMenu {
 	private static void updateItem() {
 		String item = InputOutput.getItem(printItems() ? "update" : "creat");
 		Double amount = InputOutput.getAmount();
-		InputOutput.finishUpdate(list.update(item, amount));
+		InputOutput.finishUpdate(item, list.update(item, amount));
 	}
 	
 	private static void removeItem() {
 		if(printItems()) {
 			String item = InputOutput.getItem("remove");
-			InputOutput.finishRemoveSuccess(list.delete(item));
+			InputOutput.finishRemoveSuccess(item, list.delete(item));
 		}
 	}
 	
@@ -72,5 +85,33 @@ public class InterfaceMenu {
 		list.forEach((item, amount) -> {
 		      InputOutput.printItem(item, amount);
 		});
+	}
+	
+	private static void showLists() {
+		InputOutput.listFiles();
+	}
+	
+	private static void loadList() {
+		if(DataDAO.existFiles()) {
+			DataDAO.readCSVFile(InputOutput.getPath("read"), list);
+		} else {
+			InputOutput.nonExistLists();
+		}
+	}
+	
+	private static void saveList() {
+		if(list.size() != 0) {
+			DataDAO.writeCSVFile(InputOutput.getPath("create"), list);
+		} else {
+			InputOutput.voidList();
+		}
+	}
+	
+	private static void removeList() {
+		if(DataDAO.existFiles()) {
+			DataDAO.deleteCSVFile(InputOutput.getPath("delete"));
+		} else {
+			InputOutput.nonExistLists();
+		}
 	}
 }
