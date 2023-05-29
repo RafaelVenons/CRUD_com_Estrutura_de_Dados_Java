@@ -71,7 +71,7 @@ public class InterfaceMenu {
 	private static void updateItem() {
 		String item = InputOutput.getItem(printItems() ? "update" : "creat");
 		Double amount = InputOutput.getAmount();
-		InputOutput.finishUpdate(item, list.update(item, amount));
+		InputOutput.finishUpdateSuccess(item, list.update(item, amount));
 	}
 	
 	private static void removeItem() {

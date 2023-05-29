@@ -8,18 +8,13 @@ public class InputOutput {
 	private static Scanner scanner = new Scanner(System.in);
 	
 	public static Integer menu() {
-		System.out.println("===== Lista de Comprass =====");
-        System.out.println("1. Inserir novo item a lista");
-        System.out.println("2. Imprimir lista de Compras");
-        System.out.println("3. Atualizar item da lista");
-        System.out.println("4. Excluir item da lista");
-		System.out.println("======= Listas Salvas =======");
-        System.out.println("5. Mostrar listas salvas");
-        System.out.println("6. Carregar lista");
-        System.out.println("7. Salvar lista atual");
-        System.out.println("8. Excluir lista");
-        System.out.println("0. Sair");
-        System.out.println("=============================");
+		System.out.println("===== Lista de Comprass ========== Listas Salvas======");
+        System.out.println("1. Inserir novo item a lista|5. Mostrar listas salvas");
+        System.out.println("2. Imprimir lista de Compras|6. Carregar lista");
+        System.out.println("3. Atualizar item da lista  |7. Salvar lista atual");
+        System.out.println("4. Excluir item da lista    |8. Excluir lista");
+        System.out.println("0. Sair                     |");
+        System.out.println("======================================================");
 
         System.out.print("Escolha uma opção: ");
         
@@ -67,7 +62,7 @@ public class InputOutput {
 		System.out.println(item + " -> " + amount);
 	}
 	
-	public static void finishUpdate(String item, boolean success) {
+	public static void finishUpdateSuccess(String item, boolean success) {
 		if(success)
 			System.out.println("Item " + item + " atualizado com sucesso!");
 		else
@@ -107,26 +102,22 @@ public class InputOutput {
 		return "csv\\" + name + ".cvs";
 	}
 	
-	public static void nonExistentPath(String path) {
+	public static void readCSVSuccess(String path, boolean success) {
 		path = pathClean(path);
-		System.out.println("Lista " + path + " não encontrado");
+		if(success) {
+			System.out.println("Lista " + path + " carregado com sucesso!");
+		} else {
+			System.out.println("Lista " + path + " não encontrada");
+		}
 	}
 	
-	public static void readCSVSuccess(String path) {
+	public static void creatPathSuccess(String path, boolean success) {
 		path = pathClean(path);
-		System.out.println("Lista " + path + " carregado com sucesso!");
-	}
-	
-	public static void creatPath(String path) {
-		path = pathClean(path);
-		System.out.println("Lista " + path + " criado com sucesso!");
-		
-	}
-	
-	public static void updatePath(String path) {
-		path = pathClean(path);
-		System.out.println("Lista " + path + " atualizado com sucesso!");
-		
+		if(success) {
+			System.out.println("Lista " + path + " criado com sucesso!");
+		} else {
+			System.out.println("Lista " + path + " atualizado com sucesso!");
+		}
 	}
 	
 	private static String pathClean(String path) {
@@ -168,6 +159,6 @@ public class InputOutput {
 	}
 	
 	public static void nonExistLists() {
-    	System.out.println("Ainda não existe Listas criadas");
+    	System.out.println("Não existe Listas criadas");
 	}
 }

@@ -14,7 +14,7 @@ import Interface.InputOutput;
 public class DataDAO {
 	public static Data<Double> readCSVFile(String filePath, Data<Double> list) {
 		if(!fileExists(filePath)) {
-			InputOutput.nonExistentPath(filePath);
+			InputOutput.readCSVSuccess(filePath, false);
 			return list;
 		}
 		
@@ -32,7 +32,7 @@ public class DataDAO {
             e.printStackTrace();
         }
 
-		InputOutput.readCSVSuccess(filePath);
+		InputOutput.readCSVSuccess(filePath, true);
         return list;
     }
 	
@@ -40,9 +40,9 @@ public class DataDAO {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
         	if(!fileExists(filePath)) {
     			Files.createDirectories(Paths.get(filePath).getParent());
-    			InputOutput.creatPath(filePath);
+    			InputOutput.creatPathSuccess(filePath, true);
     		} else {
-    			InputOutput.updatePath(filePath);
+    			InputOutput.creatPathSuccess(filePath, false);
     		}
 
         	list.forEach((item, amount) -> {
@@ -61,16 +61,8 @@ public class DataDAO {
 	
 	public static void deleteCSVFile(String filePath) {
         File file = new File(filePath);
-
-        if (file.exists()) {
-            if (file.delete()) {
-                InputOutput.deleteFile(file.getName(), "success");
-            } else {
-                InputOutput.deleteFile(file.getName(), "fail");
-            }
-        } else {
-            InputOutput.deleteFile(file.getName(), "nonExist");
-        }
+        String status = !file.exists() ? "nonExist" : file.delete() ? "success" : "fail";
+        InputOutput.deleteFile(file.getName(), status);
     }
 	
 	public static boolean existFiles() {
