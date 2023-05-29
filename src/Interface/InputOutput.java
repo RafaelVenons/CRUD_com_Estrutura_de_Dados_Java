@@ -8,7 +8,7 @@ public class InputOutput {
 	private static Scanner scanner = new Scanner(System.in);
 	
 	public static Integer menu() {
-		System.out.println("===== Lista de Comprass ========== Listas Salvas======");
+		System.out.println("===== Lista de Compras ========== Listas Salvas ======");
         System.out.println("1. Inserir novo item a lista|5. Mostrar listas salvas");
         System.out.println("2. Imprimir lista de Compras|6. Carregar lista");
         System.out.println("3. Atualizar item da lista  |7. Salvar lista atual");
